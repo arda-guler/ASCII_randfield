@@ -1,5 +1,7 @@
 import random
 from os import system, name
+import time
+import math
 
 def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
 
@@ -132,6 +134,42 @@ def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
             else:
                 current_index[1] += 1
 
+    # draw random disc with a random character
+
+    def disc():
+        area_char = random.choice(singles)
+
+        center_index = [random.randint(0, y_size), random.randint(0, x_size)] # y, x
+        radius = random.randint(0, int((x_size * y_size)**0.4))
+
+        current_angle = 0 # degrees
+        current_radius = 0
+        current_index = center_index
+
+        while True:
+            if current_angle >= 360 and current_radius < radius:
+                current_angle = 0
+                current_radius += 1
+            elif current_angle >= 360 and current_radius >= radius:
+                break
+            else:
+                current_angle += 1
+
+            # y = r * sin(angle)
+            # x = r * cos(angle)
+
+            current_index = [int(center_index[0] + current_radius * math.sin(math.radians(current_angle))),
+                             int(center_index[1] + current_radius * math.cos(math.radians(current_angle)))]
+
+            if (current_index[0] < 0 or current_index[0] > y_size or
+                current_index[1] < 0 or current_index[1] > x_size):
+                pass
+            else:
+                try:
+                    canvas[current_index[0]][current_index[1]] = area_char
+                except:
+                    pass
+
     #--------------------------------
     #          ART MODES
     #--------------------------------
@@ -150,6 +188,10 @@ def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
 
     elif mode == "mixed_singles":
         mixed_singles()
+
+    elif mode == "discs":
+        for i in range(0, int((x_size * y_size)**0.2)):
+            disc()
 
     elif mode == "lines":
         for i in range(0, int((x_size * y_size)**0.5)):
@@ -170,6 +212,8 @@ def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
             mixed_singles()
             for i in range(0, int((x_size * y_size)**0.2)):
                 rectangle()
+            for i in range(0, int((x_size * y_size)**0.2)):
+                disc()
             for i in range(0, int((x_size * y_size)**0.2)):
                 line()
         
@@ -219,6 +263,7 @@ while stream:
         pass
 
     generateArtASCII(x_in, y_in, mode)
+    time.sleep(0.1)
     
     
 
