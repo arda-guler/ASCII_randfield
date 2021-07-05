@@ -3,7 +3,7 @@ from os import system, name
 import time
 import math
 
-def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
+def generateArtASCII(x_size=50, y_size=50, mode="lines_discs_rects"):
 
     #--------------------------------
     #        ASCII CHARACTERS
@@ -207,6 +207,20 @@ def generateArtASCII(x_size=50, y_size=50, mode="lines_rects"):
         for i in range(0, int((x_size * y_size)**0.4)):
             line()
 
+    elif mode == "lines_discs":
+        for i in range(0, int((x_size * y_size)**0.2)):
+            disc()
+        for i in range(0, int((x_size * y_size)**0.4)):
+            line()
+
+    elif mode == "lines_discs_rects":
+        for i in range(0, int((x_size * y_size)**0.2)):
+            rectangle()
+        for i in range(0, int((x_size * y_size)**0.2)):
+            disc()
+        for i in range(0, int((x_size * y_size)**0.4)):
+            line()
+
     elif mode == "mixed":
         for r in range(0, 10):
             mixed_singles()
@@ -245,7 +259,7 @@ else:
     y_in = int(y_in)
 
 if not mode:
-    mode = "lines_rects"
+    mode = "lines_discs_rects"
 
 if stream == "y" or stream == "Y":
     stream = True
