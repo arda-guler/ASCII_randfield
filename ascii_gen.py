@@ -201,6 +201,12 @@ def generateArtASCII(x_size=50, y_size=50, mode="lines_discs_rects"):
         for i in range(0, int((x_size * y_size)**0.5)):
             rectangle()
 
+    elif mode == "discs_rects":
+        for i in range(0, int((x_size * y_size)**0.4)):
+            rectangle()
+        for i in range(0, int((x_size * y_size)**0.2)):
+            disc()
+
     elif mode == "lines_rects":
         for i in range(0, int((x_size * y_size)**0.4)):
             rectangle()
